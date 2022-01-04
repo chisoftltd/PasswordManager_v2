@@ -60,7 +60,7 @@ def gen_pwd():
 # ---------------------------- SAVE PASSWORD AS JSON ------------------------------- #
 def save_user_details():
     cwd = os.getcwd()
-    user = {
+    site_info = {
         site_entry.get(): {
             "email": email_entry.get(),
             "password": pwd_entry.get(),
@@ -75,11 +75,20 @@ def save_user_details():
                                         message=f"You have entered these details:\nEmail: {email_entry.get()}\n"
                                                 f"Password: {pwd_entry.get()}\nAre they correct to be saved?")
     if answer:
-        with open(os.path.join(cwd, "Users.json"), mode='w') as f:
-            json.dump(user, f)
+        try:
+            with open(os.path.join(cwd, "Users.json")) as f:
+                new_details = json.loads(f.read())
+                new_details.update(site_info)
+        except (FileNotFoundError, KeyError, TypeError, json.decoder.JSONDecodeError):
+            with open(os.path.join(cwd, "Users.json"), mode='w') as f:
+                json.dump(site_info, f, indent=4)
+                messagebox.showinfo(title="Confirmation", message="Your details are saved to file.")
+        else:
+            with open(os.path.join(cwd, "Users.json"), mode='w') as f:
+                json.dump(new_details, f, indent=4)
             site_entry.delete(0, END)
             pwd_entry.delete(0, END)
-        messagebox.showinfo(title="Confirmation", message="Your details are saved to file.")
+            messagebox.showinfo(title="Confirmation", message="Your details are saved to file.")
     else:
         messagebox.showinfo(title="Cancel", message="Your details are not saved to file.")
         site_entry.focus()

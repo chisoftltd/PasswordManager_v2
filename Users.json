@@ -1,6 +1,10 @@
 {
-  "Facebook": {
-    "email": "benjamin.python@gmail.com",
-    "password": "IzC7UO7)WM$o#"
-  }
+    "ebay": {
+        "email": "python@gmail.com",
+        "password": "$3ByNINS5!7c8D&Y"
+    },
+    "amazon": {
+        "email": "python@gmail.com",
+        "password": "!UN7T28fl5ca!An!d"
+    }
 }
