@@ -17,14 +17,19 @@ FONT_NAME = "Courier"
 # pwd = ''
 # ---------------------------- SEARCH WEBSITE ------------------------------- #
 def search_word():
-    cwd = os.getcwd()
-    site_details = ""
-    with open(os.path.join(cwd, "Users.json"), mode="r") as f:
-        site_result = json.loads(f.read())
-        site_json = site_result[site_entry.get()]
+    try:
+        cwd = os.getcwd()
+        site_details = ""
+        with open(os.path.join(cwd, "Users.json"), mode="r") as f:
+            site_result = json.loads(f.read())
+            site_json = site_result[site_entry.get()]
+    except (FileNotFoundError, KeyError) as error_message:
+        messagebox.showinfo(title="Error Message", message=f"An error {error_message} has occurred. Fix this error "
+                                                           f"before continue.")
+    else:
         for key in site_json:
             site_details += key + ": " + site_json[key] + "\n"
-    messagebox.showinfo(title="Website Details", message=f"{site_details}")
+        messagebox.showinfo(title="Website Details", message=f"{site_details}")
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
