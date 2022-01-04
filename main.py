@@ -78,14 +78,14 @@ def save_user_details():
         try:
             with open(os.path.join(cwd, "Users.json")) as f:
                 new_details = json.loads(f.read())
-                new_details.update(site_info)
         except (FileNotFoundError, KeyError, TypeError, json.decoder.JSONDecodeError):
             with open(os.path.join(cwd, "Users.json"), mode='w') as f:
                 json.dump(site_info, f, indent=4)
-                messagebox.showinfo(title="Confirmation", message="Your details are saved to file.")
         else:
+            new_details.update(site_info)
             with open(os.path.join(cwd, "Users.json"), mode='w') as f:
                 json.dump(new_details, f, indent=4)
+        finally:
             site_entry.delete(0, END)
             pwd_entry.delete(0, END)
             messagebox.showinfo(title="Confirmation", message="Your details are saved to file.")
